@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>StudyCap Home</title>
+  <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+</head>
+<body>
+
+  <!-- Top bar with login/logout -->
+  <div class="top-bar">
+    <a href="#" class="login-button">Login</a>
+  </div>
+<!-- Top bar with profile picture and login/logout -->
+<div class="top-bar">
+    {% if user.is_authenticated %}
+      <div class="profile-container">
+        <img src="{% static 'images/profile.png' %}" alt="Profile Image" class="profile-img">
+        <a href="{% url 'logout' %}" class="login-button">Logout</a>
+      </div>
+    {% else %}
+      <div class="profile-container">
+        <img src="{% static 'images/profile.png' %}" alt="Guest Profile" class="profile-img">
+        <a href="{% url 'login' %}" class="login-button">Login</a>
+      </div>
+    {% endif %}
+  </div>
+  
+  <!-- Main content pushed lower -->
+  <div class="main-content">
+
+    <!-- Logo -->
+    <img src="{% static 'images/logo.png' %}" alt="StudyCap Logo" class="logo-img">
+
+    <!-- Top Button & Progress Bar -->
+    <div class="top-section">
+      <button onclick="move()" class="top-button">Start Study Session</button>
+      <div id="myProgress">
+        <div id="myBar"></div>
+      </div>
+    </div>
+
+  <!-- Bottom Row of Buttons -->
+  <div class="bottom-buttons">
+    <button class="button-card">Calender</button>
+    <button class="button-card">To-Do List</button>
+    <button class="button-card">Study Timer</button>
+  </div>
+
+</div>
+  
+
+  <script src="{% static 'styles/script.js' %}"></script>
+</body>
+</html>
