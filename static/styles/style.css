@@ -1,25 +1,29 @@
 body {
-  font-family: Arial, sans-serif;
-  background-image: url("../images/background.png");
   margin: 0;
-  padding: 40px;
-  color: #000000;
+  padding: 0;
+  background-image: url('../images/waves.png');
+  background-size: cover;
+  background-position: center;
+  font-family: 'Brasika', sans-serif;
+  color: white;
+  text-align: center;
 }
+@font-face {
+  font-family: 'Brasika';
+  src: url('../fonts/brasika.ttf') format('truetype');
+}
+
 
 .container {
   max-width: 1000px;
   margin: auto;
 }
 
-.logo {
-  background: white;
-  padding: 20px;
-  border-radius: 20px;
-  font-size: 32px;
-  text-align: center;
-  font-weight: bold;
+.logo-img {
+  width: 20px;
   margin-bottom: 20px;
 }
+
 
 .grid {
   display: grid;
@@ -152,7 +156,7 @@ body {
 }
 
 .logo-img {
-  width: 120px;
+  width: 20px;
   margin-bottom: 20px;
 }
 
@@ -161,13 +165,22 @@ body {
   flex-direction: column;
   align-items: center;
 }
+.avatar--large img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
 
-.profile-img {
+
+.profile-img,
+.profile-icon {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
-  margin-bottom: 5px;
   object-fit: cover;
-  border: 2px solid #4a90e2;
+  border-radius: 50%;
 }
+
+
 
