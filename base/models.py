@@ -49,3 +49,11 @@ class Message(models.Model):
 
     def __str__(self):
         return self.body[0:50]
+
+
+class userProgress(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    current_level = models.IntegerField(default = 1)
+    progress_percentage = models.DecimalField(max_digits=5, decimal_places=2)
+    def __str__(self):
+        return f"{self.user.name} -- {self.progress}"

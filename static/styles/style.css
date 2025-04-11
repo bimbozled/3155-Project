@@ -10,11 +10,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom Font */
-@font-face {
-  font-family: 'Brasika';
-  src: url('../fonts/brasika.ttf') format('truetype');
-}
 
 /* Layout */
 .container {
@@ -63,7 +58,12 @@ body {
   text-align: center;
   margin-top: 80px;
 }
-
+.name-bar {
+  text-align: left;
+  margin-top: 20px;
+  margin-left: 40px;
+  font-size: 1.5rem;
+}
 /* Buttons */
 .top-button, .button-card {
   background-color: #4a90e2;
@@ -83,6 +83,16 @@ body {
 .button-card:hover {
   background-color: #357ABD;
   transform: translateY(-2px);
+}
+.login-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
 .bottom-buttons {
@@ -118,6 +128,8 @@ body {
   top: 0;
   right: 0;
   width: 100%;
+  margin-right: 20px;
+  margin-top: 5px;
 }
 .login-button {
   background-color: #ffffffcc;
@@ -134,15 +146,15 @@ body {
 
 /* Content */
 .main-content {
-  margin-top: 100px;
+  margin-top: 75px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 /* Logo and Avatars */
-.logo-img {
-  width: 60px;
+.fish-img {
+  width: 200px;
   margin-bottom: 20px;
 }
 .profile-container {
@@ -172,10 +184,21 @@ body {
     grid-template-columns: 1fr;
   }
   .bottom-buttons {
-    flex-direction: column;
     gap: 15px;
   }
   .top-button {
     width: 100%;
   }
+}
+
+.dropdown-menu {
+  z-index: 111;
+  position: absolute;
+  top: 5rem;
+  right: 0.5rem;
+  background: var(--color-dark-light);
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  display: none;
 }
