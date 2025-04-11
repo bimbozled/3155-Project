@@ -4,8 +4,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Room, Topic, Message, User
 from .forms import RoomForm, UserForm, MyUserCreationForm
+from .models import Todo
 
 # Create your views here.
 
@@ -203,11 +206,42 @@ def activityPage(request):
     room_messages = Message.objects.all()
     return render(request, 'base/activity.html', {'room_messages': room_messages})
 
-def todoPage(request):
-    return render(request, 'base/todo.html')
 
 def calendarPage(request):
     return render(request, 'base/calendar.html')
 
 def studyTimerPage(request):
     return render(request, 'base/studyTimer.html')
+
+def todoPage(request):
+    if request.user.is_authenticated:
+        todos = Todo.objects.filter(user=request.user)
+    else:
+        todos = []
+    return render(request, 'base/todo.html', {'todos': todos})
+
+def add_todo(request):
+    if request.method == 'POST' and request.user.is_authenticated:
+        title = request.POST.get('title')
+        if title:
+            Todo.objects.create(title=title, user=request.user)
+    return redirect('todoPage')
+
+def toggle_todo(request, todo_id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        todo = get_object_or_404(Todo, id=todo_id, user=request.user)
+        todo.completed = not todo.completed
+        todo.save()
+    return redirect('todoPage')
+
+def delete_todo(request, todo_id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        todo = get_object_or_404(Todo, id=todo_id, user=request.user)
+        todo.delete()
+    return redirect('todoPage')
+
+def calendar(request):
+    return render(request, 'base/calendar.html')
+
+def study_timer(request):
+    return render(request, 'base/study_timer.html')

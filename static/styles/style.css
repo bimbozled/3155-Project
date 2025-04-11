@@ -59,10 +59,11 @@ body {
   margin-top: 80px;
 }
 .name-bar {
+  align-items: left;
   text-align: left;
   margin-top: 20px;
   margin-left: 40px;
-  font-size: 1.5rem;
+ 
 }
 /* Buttons */
 .top-button, .button-card {
@@ -133,6 +134,7 @@ body {
 }
 .login-button {
   background-color: #ffffffcc;
+  margin-top: 3px;
   color: #4a90e2;
   font-weight: bold;
   padding: 0.6rem 1.2rem;
@@ -157,7 +159,12 @@ body {
   width: 200px;
   margin-bottom: 20px;
 }
+.logo-img {
+  width: 200px;
+  height: 100px;
+}
 .profile-container {
+  margin-top: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -201,4 +208,80 @@ body {
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   display: none;
+}
+
+/* Todo List Styles */
+.todo-container {
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  margin-bottom: 30px;
+}
+
+.todo-form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.todo-input {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.todo-item:hover {
+  background-color: #e9ecef;
+}
+
+.todo-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.todo-item.completed span {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.delete-btn:hover {
+  color: #c82333;
+}
+
+.empty-message {
+  text-align: center;
+  color: #6c757d;
+  padding: 20px 0;
 }

@@ -21,7 +21,11 @@ urlpatterns = [
     path('activity/', views.activityPage, name="activity"),
 
 
-    path('todo/', views.todoPage, name="todo"),
+    path('todo/', views.todoPage, name='todoPage'),
+    path('todo/add/', views.add_todo, name='add_todo'),
+    path('todo/toggle/<int:todo_id>/', views.toggle_todo, name='toggle_todo'),
+    path('todo/delete/<int:todo_id>/', views.delete_todo, name='delete_todo'),
+
     path('calender/', views.calendarPage, name="calender"),
     path('studyTimer/', views.studyTimerPage, name="studyTimer"),
 ]

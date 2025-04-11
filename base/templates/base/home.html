@@ -8,11 +8,10 @@
 </head>
 <body>
   <div class="name-bar">
-    <h1>FSH <img src="{% static 'images/logo.png' %}"style="width: 30px; height: 30px;"> </h1>
+    <h1><img src="{% static 'images/logo2.png' %}"class='logo-img'> </h1>
   </div>
 
 
-<!-- Top bar with profile picture and login/logout -->
 <div class="top-bar">
   
     {% if user.is_authenticated %}
@@ -42,7 +41,7 @@
 
   <div class="bottom-buttons">
     <button class="button-card">Calender</button>
-    <button class="button-card">To-Do List</button>
+    <a href="{% url 'todoPage' %}" class="button-card">To-Do List</a>
     <button class="button-card">Study Timer</button>
   </div>
 
