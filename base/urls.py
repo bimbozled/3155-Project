@@ -19,4 +19,9 @@ urlpatterns = [
 
     path('topics/', views.topicsPage, name="topics"),
     path('activity/', views.activityPage, name="activity"),
+
+
+    path('todo/', views.todoPage, name="todo"),
+    path('calender/', views.calendarPage, name="calender"),
+    path('studyTimer/', views.studyTimerPage, name="studyTimer"),
 ]

@@ -202,3 +202,12 @@ def topicsPage(request):
 def activityPage(request):
     room_messages = Message.objects.all()
     return render(request, 'base/activity.html', {'room_messages': room_messages})
+
+def todoPage(request):
+    return render(request, 'base/todo.html')
+
+def calendarPage(request):
+    return render(request, 'base/calendar.html')
+
+def studyTimerPage(request):
+    return render(request, 'base/studyTimer.html')
