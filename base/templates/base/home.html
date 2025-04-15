@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="name-bar">
-    <h1><img src="{% static 'images/logo2.png' %}"class='logo-img'> </h1>
+    <h1><img src="{% static 'images/logo3.png' %}"class='logo-img'> </h1>
   </div>
 
 
@@ -16,12 +16,12 @@
   
     {% if user.is_authenticated %}
       <div class="profile-container">
-        <img src="{% static 'images/profile.png' %}" alt="Profile Image" class="profile-img">
+        <img src="{% static 'images/loggedin.png' %}" alt="Profile Image" class="profile-img">
         <a href="{% url 'logout' %}" class="login-button">Logout</a>
       </div>
     {% else %}
       <div class="profile-container">
-        <img src="{% static 'images/profile.png' %}" alt="Guest Profile" class="profile-img">
+        <img src="{% static 'images/loggedout.jpg' %}" alt="Guest Profile" class="profile-img">
         <a href="{% url 'login' %}" class="login-button">Login</a>
       </div>
     {% endif %}
@@ -40,9 +40,9 @@
     </div>
 
   <div class="bottom-buttons">
-    <button class="button-card">Calender</button>
+    <a href="{% url 'calendar' %}" class="button-card">Calendar</a>
     <a href="{% url 'todoPage' %}" class="button-card">To-Do List</a>
-    <button class="button-card">Study Timer</button>
+    <a href="{% url 'studyTimer' %}" class="button-card">Study Timer</a>
   </div>
 
 </div>

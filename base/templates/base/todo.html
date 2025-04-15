@@ -1,4 +1,8 @@
+{% extends 'main.html' %}
 {% load static %}
+
+{% block content %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,24 +11,7 @@
   <link rel="stylesheet" href="{% static 'styles/style.css' %}">
 </head>
 <body>
-  <div class="name-bar">
-    <h1>FSH <img src="{% static 'images/logo.png' %}" style="width: 30px; height: 30px;"> </h1>
-  </div>
 
-  <!-- Top bar with profile picture and login/logout -->
-  <div class="top-bar">
-    {% if user.is_authenticated %}
-      <div class="profile-container">
-        <img src="{% static 'images/profile.png' %}" alt="Profile Image" class="profile-img">
-        <a href="{% url 'logout' %}" class="login-button">Logout</a>
-      </div>
-    {% else %}
-      <div class="profile-container">
-        <img src="{% static 'images/profile.png' %}" alt="Guest Profile" class="profile-img">
-        <a href="{% url 'login' %}" class="login-button">Login</a>
-      </div>
-    {% endif %}
-  </div>
   
   <div class="main-content">
     <div class="top-section">
@@ -67,3 +54,4 @@
   <script src="{% static 'styles/script.js' %}"></script>
 </body>
 </html>
+{% endblock content %}
