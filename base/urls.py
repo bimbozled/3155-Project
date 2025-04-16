@@ -28,4 +28,6 @@ urlpatterns = [
 
     path('calendar/', views.calendarPage, name="calendar"),
     path('studyTimer/', views.studyTimerPage, name="studyTimer"),
+    path('add_points/', views.add_points, name='add_points'),
+
 ]
