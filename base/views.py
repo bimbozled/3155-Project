@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -245,3 +246,11 @@ def calendar(request):
 
 def study_timer(request):
     return render(request, 'base/study_timer.html')
+    
+def add_points(request):
+    if request.method == "POST":
+        points_to_add = int(request.POST.get('points', 0))
+        request.user.points += points_to_add
+        request.user.save()
+        return JsonResponse({'success': True, 'new_points': request.user.points})
+    return JsonResponse({'success': False}, status=400)
