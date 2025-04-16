@@ -9,11 +9,18 @@
   <link rel="stylesheet" href="{% static 'styles/style.css' %}">
 </head>
 {% block content %}
+  
+    <div class="calendar-container">
+      <h2>Calendar</h2>
+      <div id="calendar"></div>
+    </div>
 
+    <script src="{% static 'js/calender.js' %}"></script>
 
-<div class="bottom-buttons">
-    <a href="{% url 'home' %}" class="button-card">Home</a>
-</div>
+    <div class="bottom-buttons">
+        <a href="{% url 'home' %}" class="button-card">Home</a>
+    </div>
+  
 
 {% endblock content %}
 

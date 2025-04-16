@@ -303,3 +303,48 @@ body {
   padding: 10px 20px;
   font-size: 1em;
 }
+
+.fish-container {
+  position: relative;
+  width: 300px;
+  margin: 20px auto;
+}
+
+.fish-img {
+  width: 100%;
+  display: block;
+  opacity: 1; /* Start fully visible */
+  transition: opacity 1s linear; /* Smooth fade */
+}
+
+.fish-img.fade-out {
+  opacity: 0; /* Fade to invisible */
+}
+
+.calendar-container {
+  margin: 20px auto;
+  text-align: center;
+}
+
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  width: 80%;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.calendar-day {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  background-color: #fff;
+  transition: background-color 0.3s;
+}
+
+.calendar-day:hover {
+  background-color: lightblue;
+  cursor: pointer;
+}
+

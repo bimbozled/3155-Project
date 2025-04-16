@@ -12,6 +12,9 @@ function updateDisplay() {
   let minutes = Math.floor(timer / 60);
   let seconds = timer % 60;
   timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+  let progress = (timer / duration) * 100; 
+  document.querySelector(".fish-img").style.opacity = progress / 100;
 }
 
 function startTimer() {
