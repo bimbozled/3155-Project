@@ -1,15 +1,13 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .models import Room, Topic, Message, User
+from .models import Room, Topic, Message, User, Todo
 from .forms import RoomForm, UserForm, MyUserCreationForm
-from .models import Todo
+
 
 # Create your views here.
 
@@ -53,19 +51,24 @@ def logoutUser(request):
 
 def registerPage(request):
     form = MyUserCreationForm()
-
+    
     if request.method == 'POST':
         form = MyUserCreationForm(request.POST)
         if form.is_valid():
+            # Save user but don't commit to database yet
             user = form.save(commit=False)
-            user.username = user.username.lower()
+            # Set username to email (since you're using email for login)
+            user.username = user.email.lower()
             user.save()
+            # Log the user in
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, 'An error occurred during registration')
-
-    return render(request, 'base/login_register.html', {'form': form})
+            # Print form errors to console for debugging
+            print(form.errors)
+            messages.error(request, 'Registration failed. Please check the form.')
+    
+    return render(request, 'base/login_register.html', {'form': form, 'page': 'register'})
 
 
 def home(request):
@@ -211,44 +214,53 @@ def activityPage(request):
 def calendarPage(request):
     return render(request, 'base/calendar.html')
 
+
 def studyTimerPage(request):
     return render(request, 'base/studyTimer.html')
 
-def todoPage(request):
-    if request.user.is_authenticated:
-        todos = Todo.objects.filter(user=request.user)
-    else:
-        todos = []
+
+@login_required(login_url='login')
+def todo_list(request):
+    todos = Todo.objects.filter(user=request.user)
     return render(request, 'base/todo.html', {'todos': todos})
 
+
+@login_required(login_url='login')
 def add_todo(request):
-    if request.method == 'POST' and request.user.is_authenticated:
+    if request.method == 'POST':
         title = request.POST.get('title')
         if title:
             Todo.objects.create(title=title, user=request.user)
-    return redirect('todoPage')
+    return redirect('todo_list')
 
+
+@login_required(login_url='login')
 def toggle_todo(request, todo_id):
-    if request.method == 'POST' and request.user.is_authenticated:
+    if request.method == 'POST':
         todo = get_object_or_404(Todo, id=todo_id, user=request.user)
         todo.completed = not todo.completed
         todo.save()
-    return redirect('todoPage')
+    return redirect('todo_list')
 
+
+@login_required(login_url='login')
 def delete_todo(request, todo_id):
-    if request.method == 'POST' and request.user.is_authenticated:
+    if request.method == 'POST':
         todo = get_object_or_404(Todo, id=todo_id, user=request.user)
         todo.delete()
-    return redirect('todoPage')
+    return redirect('todo_list')
+
 
 def calendar(request):
     return render(request, 'base/calendar.html')
 
+
 def study_timer(request):
     return render(request, 'base/study_timer.html')
-    
+
+
 def add_points(request):
-    if request.method == "POST":
+    if request.method == "POST" and request.user.is_authenticated:
         points_to_add = int(request.POST.get('points', 0))
         request.user.points += points_to_add
         request.user.save()

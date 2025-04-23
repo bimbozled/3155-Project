@@ -20,8 +20,7 @@ urlpatterns = [
     path('topics/', views.topicsPage, name="topics"),
     path('activity/', views.activityPage, name="activity"),
 
-
-    path('todo/', views.todoPage, name='todoPage'),
+    path('todo/', views.todo_list, name='todo_list'),
     path('todo/add/', views.add_todo, name='add_todo'),
     path('todo/toggle/<int:todo_id>/', views.toggle_todo, name='toggle_todo'),
     path('todo/delete/<int:todo_id>/', views.delete_todo, name='delete_todo'),
@@ -29,5 +28,4 @@ urlpatterns = [
     path('calendar/', views.calendarPage, name="calendar"),
     path('studyTimer/', views.studyTimerPage, name="studyTimer"),
     path('add_points/', views.add_points, name='add_points'),
-
 ]

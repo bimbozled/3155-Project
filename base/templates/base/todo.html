@@ -2,46 +2,56 @@
 {% load static %}
 
 {% block content %}
- 
-  <div class="main-content">
+<div class="main-content">
     <div class="top-section">
-      <h2>To-Do List</h2>
+        <h2>To-Do List</h2>
     </div>
 
     <div class="todo-container">
-      <form method="POST" action="{% url 'add_todo' %}" class="todo-form">
-        {% csrf_token %}
-        <input type="text" name="title" placeholder="Add a new task..." required class="todo-input">
-        <button type="submit" class="top-button">Add Task</button>
-      </form>
+        <!-- Add Task Form -->
+        <form method="POST" action="{% url 'add_todo' %}" class="todo-form">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="Add a new task..." required class="todo-input">
+            <button type="submit" class="top-button">Add Task</button>
+        </form>
 
-      <div class="todo-list">
-        {% for todo in todos %}
-          <div class="todo-item {% if todo.completed %}completed{% endif %}">
-            <div class="todo-content">
-              <form method="POST" action="{% url 'toggle_todo' todo.id %}" style="display: inline;">
-                {% csrf_token %}
-                <input type="checkbox" onChange="this.form.submit()" {% if todo.completed %}checked{% endif %}>
-              </form>
-              <span>{{ todo.title }}</span>
-            </div>
-            <form method="POST" action="{% url 'delete_todo' todo.id %}" style="display: inline;">
-              {% csrf_token %}
-              <button type="submit" class="delete-btn">×</button>
-            </form>
-          </div>
-        {% empty %}
-          <p class="empty-message">No tasks yet. Add one above!</p>
-        {% endfor %}
-      </div>
+        <!-- To-Do List -->
+        <div class="todo-list">
+            {% for todo in todos %}
+                <div class="todo-item {% if todo.completed %}completed{% endif %}">
+                    <div class="todo-content">
+                        <form method="POST" action="{% url 'toggle_todo' todo.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="checkbox" onChange="this.form.submit()" {% if todo.completed %}checked{% endif %}>
+                        </form>
+                        <span>{{ todo.title }}</span>
+                    </div>
+                    <form method="POST" action="{% url 'delete_todo' todo.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-btn">×</button>
+                    </form>
+                </div>
+            {% empty %}
+                <p class="empty-message">No tasks yet. Add one above!</p>
+            {% endfor %}
+        </div>
     </div>
 
     <div class="bottom-buttons">
-      <a href="{% url 'home' %}" class="button-card">Home</a>
+        <a href="{% url 'home' %}" class="button-card">Home</a>
     </div>
-  </div>
-
-  <script src="{% static 'styles/script.js' %}"></script>
-</body>
-</html>
+</div>
+<style>
+    /* Make todo item text black */
+    .todo-content span {
+        color: #000;
+    }
+    
+    /* Ensure completed todo items have a different style but still readable */
+    .todo-item.completed .todo-content span {
+        color: #666;
+        text-decoration: line-through;
+    }
+</style>
 {% endblock content %}
+ 

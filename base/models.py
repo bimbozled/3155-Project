@@ -1,14 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import User
 
-    
 class User(AbstractUser):
     name = models.CharField(max_length=200, null=True)
     email = models.EmailField(unique=True, null=True)
     bio = models.TextField(null=True)
-    points = models.IntegerField(default=0)
-
+    points = models.IntegerField(default=0)  # Preserving your points field
+    
     avatar = models.ImageField(null=True, default="avatar.svg")
 
     USERNAME_FIELD = 'email'
@@ -53,12 +51,14 @@ class Message(models.Model):
         return self.body[0:50]
 
 
-class userProgress(models.Model):
+class UserProgress(models.Model):  # Fixed capitalization
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    current_level = models.IntegerField(default = 1)
+    current_level = models.IntegerField(default=1)
     progress_percentage = models.DecimalField(max_digits=5, decimal_places=2)
+    
     def __str__(self):
-        return f"{self.user.name} -- {self.progress}"
+        return f"{self.user.name} -- {self.progress_percentage}"  # Fixed attribute name
+    
     
 class Todo(models.Model):
     title = models.CharField(max_length=200)
