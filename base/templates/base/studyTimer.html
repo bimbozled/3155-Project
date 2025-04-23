@@ -2,45 +2,67 @@
 {% load static %}
 
 {% block content %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>FSH - Study Timer</title>
-  <link rel="stylesheet" href="{% static 'styles/style.css' %}">
-</head>
-<body>
-
-  <div class="main-content">
-    <div class="fish-container">
-      <img src="{% static 'images/fish.png' %}" alt="Fish" class="fish-img">
-      <div class="fish-fill"></div> <!-- The animated fill layer -->
-    </div>
+<div class="main-content">
     <div class="top-section">
-      <h2>Study Timer</h2>
+        <h2>Study Timer</h2>
     </div>
 
-    <div class="timer-container">
-      <div id="timer-display">25:00</div>
-
-      <div class="timer-buttons">
-        <button id="start-btn" class="top-button">Start</button>
-        <button id="pause-btn" class="top-button">Pause</button>
-        <button id="reset-btn" class="top-button">Reset</button>
-      </div>
+    <div class="timer-content">
+        <!-- Fish moved to the top -->
+        <div class="fish-wrapper">
+            <img src="{% static 'images/fish.png' %}" alt="Fish" class="fish-img">
+            <div class="fish-fill"></div>
+        </div>
+        
+        <!-- Timer display now below the fish -->
+        <div id="timer-display">25:00</div>
+        
+        <div class="timer-buttons">
+            <button id="start-btn" class="top-button">Start</button>
+            <button id="pause-btn" class="top-button">Pause</button>
+            <button id="reset-btn" class="top-button">Reset</button>
+        </div>
     </div>
 
     <div class="bottom-buttons">
-      <a href="{% url 'home' %}" class="button-card">Home</a>
+        <a href="{% url 'home' %}" class="button-card">Home</a>
     </div>
-  </div>
+</div>
 
-  <script src="{% static 'js/timer.js' %}"></script>
-</body>
-</html>
+<style>
+    /* Additional styling for the combined layout */
+    .timer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        position: relative;
+        padding: 30px 0;
+    }
+    
+    .fish-wrapper {
+        width: 100px;
+        position: relative;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+    
+    .fish-img {
+        width: 100%;
+        display: block;
+    }
+    
+    #timer-display {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    .timer-buttons {
+        display: flex;
+        gap: 10px;
+    }
+</style>
 
+<script src="{% static 'js/timer.js' %}"></script>
 {% endblock content %}
-
-
-

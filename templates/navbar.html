@@ -13,7 +13,6 @@
             <div class="profile-container">
                 <a href="{% url 'update-user' %}">
               <img src="{% static 'images/loggedin.png' %}" alt="Profile Image" class="profile-img">
-              <p>{{request.user.username}} <span>@{{request.user.username}}</span></p>
               <a href="{% url 'logout' %}" class="login-button">Logout</a>
             </div>
           {% else %}

@@ -156,12 +156,12 @@ body {
 
 /* Logo and Avatars */
 .fish-img {
-  width: 200px;
+  width: 100px;
   margin-bottom: 20px;
 }
 .logo-img {
-  width: 200px;
-  height: 100px;
+  width: 100px;
+  height: 50px;
 }
 .profile-container {
   margin-top: 5px;
@@ -306,7 +306,7 @@ body {
 
 .fish-container {
   position: relative;
-  width: 300px;
+  width: 200px;
   margin: 20px auto;
 }
 
