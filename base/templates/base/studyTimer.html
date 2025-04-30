@@ -15,17 +15,17 @@
         </div>
         
         <!-- Timer display below the fish -->
-        <div id="timer-display">25:00</div>
+        <div id="timer-display"></div>
 
         <!-- New: Timer options -->
         <div class="timer-options">
             <label for="time-select">Select Time:</label>
             <select id="time-select">
-                <option value="15">15 Minutes</option>
-                <option value="25" selected>25 Minutes</option>
+                <option value="15" selected>15 Minutes</option>
+                <option value="25">25 Minutes</option>
                 <option value="30">30 Minutes</option>
                 <option value="45">45 Minutes</option>
-                <option value="60">1 Hour</option>
+                <option value="60">60 minutes</option>
             </select>
         </div>
         
@@ -42,7 +42,6 @@
 </div>
 
 <style>
-    /* Updated styling */
     .timer-content {
         display: flex;
         flex-direction: column;
@@ -87,57 +86,5 @@
     }
 </style>
 
-<script src="{% static 'js/timer.js' %}"></script>
-
-<!-- Inline additional script to handle timer option changes -->
-<script>
-    const timeSelect = document.getElementById('time-select');
-    const timerDisplay = document.getElementById('timer-display');
-    let timerDuration = 25 * 60; // Default 25 minutes
-    let timerInterval;
-
-    timeSelect.addEventListener('change', function() {
-        const selectedMinutes = parseInt(this.value);
-        timerDuration = selectedMinutes * 60;
-        updateTimerDisplay(timerDuration);
-        resetTimer();
-    });
-
-    function updateTimerDisplay(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    }
-
-    function startTimer() {
-        clearInterval(timerInterval);
-        timerInterval = setInterval(() => {
-            if (timerDuration <= 0) {
-                clearInterval(timerInterval);
-                alert('Time is up!');
-            } else {
-                timerDuration--;
-                updateTimerDisplay(timerDuration);
-            }
-        }, 1000);
-    }
-
-    function pauseTimer() {
-        clearInterval(timerInterval);
-    }
-
-    function resetTimer() {
-        clearInterval(timerInterval);
-        const selectedMinutes = parseInt(timeSelect.value);
-        timerDuration = selectedMinutes * 60;
-        updateTimerDisplay(timerDuration);
-    }
-
-    document.getElementById('start-btn').addEventListener('click', startTimer);
-    document.getElementById('pause-btn').addEventListener('click', pauseTimer);
-    document.getElementById('reset-btn').addEventListener('click', resetTimer);
-
-    // Initialize timer display on page load
-    updateTimerDisplay(timerDuration);
-</script>
+<script src="{% static 'js/timer.js' %}?v=2"></script>
 {% endblock content %}
