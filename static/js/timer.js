@@ -81,4 +81,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize timer on page load
   initializeTimer();
+
+
+  // When timer ends
+function timerEnded() {
+  // Play sound, show notification, etc.
+  
+  // Send request to award points
+  fetch('/complete-timer/', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-CSRFToken': getCsrfToken() // Function to get CSRF token
+      },
+      credentials: 'same-origin'
+  })
+  .then(response => response.json())
+  .then(data => {
+      if(data.success) {
+          // Show points earned notification
+          showPointsEarned(data.points_earned, data.new_total);
+      }
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+// Helper function to get CSRF token
+function getCsrfToken() {
+  return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}
+
+// Function to show points earned
+function showPointsEarned(points, newTotal) {
+  const notification = document.createElement('div');
+  notification.className = 'points-notification';
+  notification.innerHTML = `<span>+${points} points!</span>`;
+  document.body.appendChild(notification);
+  
+  // Update points display if you have one
+  const pointsDisplay = document.getElementById('points-display');
+  if(pointsDisplay) {
+      pointsDisplay.textContent = newTotal;
+  }
+  
+  // Remove notification after animation
+  setTimeout(() => {
+      notification.remove();
+  }, 3000);
+}
 });

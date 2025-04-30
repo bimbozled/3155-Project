@@ -9,14 +9,6 @@ from .models import Room, Topic, Message, User, Todo
 from .forms import RoomForm, UserForm, MyUserCreationForm
 
 
-# Create your views here.
-
-# rooms = [
-#     {'id': 1, 'name': 'Lets learn python!'},
-#     {'id': 2, 'name': 'Design with me'},
-#     {'id': 3, 'name': 'Frontend developers'},
-# ]
-
 
 def loginPage(request):
     page = 'login'
@@ -210,11 +202,11 @@ def activityPage(request):
     room_messages = Message.objects.all()
     return render(request, 'base/activity.html', {'room_messages': room_messages})
 
-
+@login_required(login_url='login')
 def calendarPage(request):
     return render(request, 'base/calendar.html')
 
-
+@login_required(login_url='login')
 def studyTimerPage(request):
     return render(request, 'base/studyTimer.html')
 
@@ -234,13 +226,7 @@ def add_todo(request):
     return redirect('todo_list')
 
 
-@login_required(login_url='login')
-def toggle_todo(request, todo_id):
-    if request.method == 'POST':
-        todo = get_object_or_404(Todo, id=todo_id, user=request.user)
-        todo.completed = not todo.completed
-        todo.save()
-    return redirect('todo_list')
+
 
 
 @login_required(login_url='login')
@@ -251,18 +237,54 @@ def delete_todo(request, todo_id):
     return redirect('todo_list')
 
 
-def calendar(request):
-    return render(request, 'base/calendar.html')
-
-
-def study_timer(request):
-    return render(request, 'base/study_timer.html')
-
-
 def add_points(request):
     if request.method == "POST" and request.user.is_authenticated:
         points_to_add = int(request.POST.get('points', 0))
         request.user.points += points_to_add
         request.user.save()
         return JsonResponse({'success': True, 'new_points': request.user.points})
+    return JsonResponse({'success': False}, status=400)
+
+def award_points(user, points_amount, reason=""):
+        """Award points to a user and log the transaction"""
+        if user.is_authenticated:
+            user.points += points_amount
+            user.save()
+            # Optionally log the points transaction
+            # PointsLog.objects.create(user=user, points=points_amount, reason=reason)
+            return True
+        return False
+    
+    # Modify toggle_todo to award points when completing
+@login_required(login_url='login')
+def toggle_todo(request, todo_id):
+        if request.method == 'POST':
+            todo = get_object_or_404(Todo, id=todo_id, user=request.user)
+            was_completed = todo.completed
+            todo.completed = not todo.completed
+            todo.save()
+            
+            # Award points only when marking as completed (not when unchecking)
+            if not was_completed and todo.completed:
+                award_points(request.user, 5, f"Completed todo: {todo.title}")
+                messages.success(request, "Task completed! You earned 5 points!")
+                
+        return redirect('todo_list')
+    
+    # Modify or add a timer completion endpoint
+@login_required(login_url='login')
+def complete_timer(request):
+    if request.method == 'POST':
+        # Award points for completing the timer
+        award_points(request.user, 10, "Completed study session")
+        
+        # Check if the user just crossed the 50 point threshold
+        level_up = request.user.points >= 50 and request.user.points - 10 < 50
+        
+        return JsonResponse({
+            'success': True, 
+            'points_earned': 10,
+            'new_total': request.user.points,
+            'level_up': level_up
+        })
     return JsonResponse({'success': False}, status=400)

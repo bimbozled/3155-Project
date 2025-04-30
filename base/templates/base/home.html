@@ -13,7 +13,11 @@
 
 
 <div class="top-bar">
-  
+  {% if user.is_authenticated %}
+  <div class="user-points">
+    <span id="points-display">{{ user.points }}</span> points
+  </div>
+  {% endif %}
     {% if user.is_authenticated %}
       <div class="profile-container">
         <img src="{% static 'images/loggedin.png' %}" alt="Profile Image" class="profile-img">
@@ -31,9 +35,19 @@
 
     <div class="top-section">
       <section>
-      <img src="{% static 'images/fish.png' %}" alt="Fish" class="fish-img">
+      {% if user.is_authenticated and user.points >= 50 %}
+        <img src="{% static 'images/fish2.png' %}" alt="Advanced Fish" class="fish-img" id="fish-image">
+      {% else %}
+        <img src="{% static 'images/fish.png' %}" alt="Fish" class="fish-img" id="fish-image">
+      {% endif %}
       </section>
-      <button onclick="move()" class="top-button">Level 1</button>
+      <button onclick="move()" class="top-button">
+        {% if user.is_authenticated and user.points >= 50 %}
+          Level 2
+        {% else %}
+          Level 1
+        {% endif %}
+      </button>
       <div id="myProgress">
         <div id="myBar"></div>
       </div>
@@ -47,6 +61,41 @@
 
 </div>
   
+  <script>
+    // Function to check points and update fish image dynamically
+    function checkPointsAndUpdateFish() {
+      const pointsDisplay = document.getElementById('points-display');
+      const fishImage = document.getElementById('fish-image');
+      const levelButton = document.querySelector('.top-button');
+      
+      if (pointsDisplay && fishImage) {
+        const currentPoints = parseInt(pointsDisplay.textContent);
+        
+        if (currentPoints >= 50) {
+          fishImage.src = "{% static 'images/fish2.png' %}";
+          levelButton.textContent = "Level 2";
+        } else {
+          fishImage.src = "{% static 'images/fish.png' %}";
+          levelButton.textContent = "Level 1";
+        }
+      }
+    }
+    
+    // Call once on page load
+    document.addEventListener('DOMContentLoaded', checkPointsAndUpdateFish);
+    
+    // Set up an observer to watch for points changes
+    const pointsObserver = new MutationObserver(checkPointsAndUpdateFish);
+    const pointsDisplay = document.getElementById('points-display');
+    
+    if (pointsDisplay) {
+      pointsObserver.observe(pointsDisplay, { 
+        childList: true,
+        characterData: true,
+        subtree: true 
+      });
+    }
+  </script>
 
   <script src="{% static 'styles/script.js' %}"></script>
 </body>

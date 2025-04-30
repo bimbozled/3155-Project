@@ -21,6 +21,7 @@
         <div class="timer-options">
             <label for="time-select">Select Time:</label>
             <select id="time-select">
+                <option value="1" >1 Minutes</option>
                 <option value="15" selected>15 Minutes</option>
                 <option value="25">25 Minutes</option>
                 <option value="30">30 Minutes</option>
@@ -84,7 +85,137 @@
         font-size: 1rem;
         margin-left: 10px;
     }
+    
+    /* Points notification styling */
+    .points-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #fa6989;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-weight: bold;
+        animation: fadeInOut 3s ease-in-out;
+        z-index: 1000;
+    }
+
+    @keyframes fadeInOut {
+        0% { opacity: 0; transform: translateY(-20px); }
+        20% { opacity: 1; transform: translateY(0); }
+        80% { opacity: 1; transform: translateY(0); }
+        100% { opacity: 0; transform: translateY(-20px); }
+    }
 </style>
 
+<!-- Add CSRF token for AJAX requests -->
+{% csrf_token %}
+
 <script src="{% static 'js/timer.js' %}?v=2"></script>
+
+<script>
+    // This will run after the original timer.js loads
+    document.addEventListener('DOMContentLoaded', function() {
+        // Store reference to original timer end function if it exists
+        const originalTimerEnd = window.timerEnd;
+        
+        // Define our new timer end function that awards points
+        window.timerEnd = function() {
+            // Call original function if it exists
+            if (typeof originalTimerEnd === 'function') {
+                originalTimerEnd();
+            }
+            
+            // Send request to award points
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            fetch('/complete-timer/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrftoken
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                if (data.success) {
+                    // Show points notification
+                    showPointsNotification(data.points_earned);
+                    
+                    // Update points display if it exists
+                    updatePointsDisplay(data.new_total);
+                    
+                    // Check if user leveled up
+                    if (data.level_up) {
+                        // Add level-up notification
+                        showLevelUpNotification();
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        };
+        
+        // Hook into the existing timer logic
+        const startBtn = document.getElementById('start-btn');
+        const originalStartClick = startBtn.onclick;
+        
+        startBtn.onclick = function() {
+            if (typeof originalStartClick === 'function') {
+                originalStartClick.apply(this);
+            }
+            
+            // If timer.js doesn't have an end handler, add our own
+            if (!window.timerInterval) {
+                const timeSelect = document.getElementById('time-select');
+                const minutes = parseInt(timeSelect.value);
+                const endTime = Date.now() + minutes * 60 * 1000;
+                
+                window.timerInterval = setInterval(function() {
+                    const remaining = endTime - Date.now();
+                    if (remaining <= 0) {
+                        clearInterval(window.timerInterval);
+                        window.timerEnd();
+                    }
+                }, 1000);
+            }
+        };
+    });
+    
+    // Function to show points notification
+    function showPointsNotification(points) {
+        const notification = document.createElement('div');
+        notification.className = 'points-notification';
+        notification.textContent = `+${points} points!`;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+    
+    // Function to update points display
+    function updatePointsDisplay(newTotal) {
+        const pointsDisplay = document.querySelector('.user-points span');
+        if (pointsDisplay) {
+            pointsDisplay.textContent = newTotal;
+        }
+    }
+    
+    // Function to show level-up notification
+    function showLevelUpNotification() {
+        const notification = document.createElement('div');
+        notification.className = 'points-notification';
+        notification.style.backgroundColor = '#4CAF50';
+        notification.textContent = 'Level Up! Check your fish!';
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 5000);
+    }
+</script>
 {% endblock content %}
