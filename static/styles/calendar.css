@@ -33,7 +33,11 @@ body {
 }
 
 .container-calendar #left h1 {
+<<<<<<< Updated upstream
 	color: blue;
+=======
+	color: #1651a4;
+>>>>>>> Stashed changes
 	text-align: center;
 	background-color: #f2f2f2;
 	margin: 0;
@@ -41,7 +45,11 @@ body {
 }
 
 #event-section h3 {
+<<<<<<< Updated upstream
 	color: blue;
+=======
+	color: #1651a4;
+>>>>>>> Stashed changes
 	font-size: 18px;
 	margin: 0;
 }
@@ -54,7 +62,11 @@ body {
 }
 
 #event-section button {
+<<<<<<< Updated upstream
 	background: blue;
+=======
+	background: #1651a4;
+>>>>>>> Stashed changes
 	color: white;
 	border: none;
 	padding: 5px 10px;
@@ -70,7 +82,11 @@ body {
 	display: block;
 	width: 6px;
 	height: 6px;
+<<<<<<< Updated upstream
 	background-color: blue;
+=======
+	background-color: #1651a4;
+>>>>>>> Stashed changes
 	border-radius: 50%;
 	position: absolute;
 	bottom: 0;
@@ -106,7 +122,11 @@ body {
 }
 
 #reminder-section h3 {
+<<<<<<< Updated upstream
 	color: blue;
+=======
+	color: #1651a4;
+>>>>>>> Stashed changes
 	font-size: 18px;
 	margin: 0;
 }
@@ -136,9 +156,15 @@ body {
 /* Buttons in the calendar */
 .button-container-calendar button {
 	cursor: pointer;
+<<<<<<< Updated upstream
 	background: blue;
 	color: #fff;
 	border: 1px solid blue;
+=======
+	background: #1651a4;
+	color: #fff;
+	border: 1px solid #1651a4;
+>>>>>>> Stashed changes
 	border-radius: 4px;
 	padding: 5px 10px;
 }
@@ -176,13 +202,21 @@ body {
 }
 
 .date-picker:nth-child(6) {
+<<<<<<< Updated upstream
 	color: rgb(68, 90, 255);
+=======
+	color: rgb(0, 255, 0);
+>>>>>>> Stashed changes
 	/* Friday */
 }
 
 /* Hover effect for date cells */
 .date-picker:hover {
+<<<<<<< Updated upstream
 	background-color: rgb(60, 47, 235);
+=======
+	background-color: #1651a4 ;
+>>>>>>> Stashed changes
 	color: white;
 	cursor: pointer;
 }

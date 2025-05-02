@@ -156,11 +156,28 @@ body {
 
 /* Logo and Avatars */
 .fish-img {
-  width: 100px; /* Larger size with !important flag */
+  max-width: 100%;
+  height: auto !important; /* Larger size with !important flag */
   margin-bottom: 20px;
   display: block;
   opacity: 1; /* Start fully visible */
   transition: opacity 1s linear; /* Smooth fade */
+}
+
+.fish-img-level1{
+  width: 150px !important;
+}
+.fish-img-level2{
+  width: 200px !important;
+}
+.fish-img-level3{
+  width: 250px !important;
+}
+.fish-img-level4{
+  width: 300px !important;
+}
+.fish-img-level5{
+  width: 400px !important;
 }
 
 .logo-img {

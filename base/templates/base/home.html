@@ -35,10 +35,16 @@
 
     <div class="top-section">
       <section>
-      {% if user.is_authenticated and user.points >= 50 %}
-        <img src="{% static 'images/fish2.png' %}" alt="Advanced Fish" class="fish-img" id="fish-image">
+      {% if user.is_authenticated and user.points >= 80 %}
+        <img src="{% static 'images/fish5.png' %}" alt="Advanced Fish" class="fish-img fish-img-level5" id="fish-image">
+      {% elif user.points >= 60 %}
+      <img src="{% static 'images/fish4.png' %}" alt="Advanced Fish" class="fish-img fish-img-level4" id="fish-image">
+      {% elif user.points >= 40 %}
+      <img src="{% static 'images/fish3.png' %}" alt="Advanced Fish" class="fish-img fish-img-level3" id="fish-image">
+      {% elif user.points >= 20 %}
+      <img src="{% static 'images/fish2.png' %}" alt="Advanced Fish" class="fish-img fish-img-level2" id="fish-image">
       {% else %}
-        <img src="{% static 'images/fish.png' %}" alt="Fish" class="fish-img" id="fish-image">
+        <img src="{% static 'images/fish.png' %}" alt="Fish" class="fish-img fish-img-level1" id="fish-image">
       {% endif %}
       </section>
       <button onclick="move()" class="top-button">
@@ -71,10 +77,19 @@
       if (pointsDisplay && fishImage) {
         const currentPoints = parseInt(pointsDisplay.textContent);
         
-        if (currentPoints >= 50) {
+        if (currentPoints >= 80) {
+          fishImage.src = "{% static 'images/fish5.png' %}";
+          levelButton.textContent = "Level 5";
+        } else if (currentPoints >= 60) {
+          fishImage.src = "{% static 'images/fish4.png' %}";
+          levelButton.textContent = "Level 4";
+        } else if (currentPoints >= 40){
+          fishImage.src = "{%static 'images/fish3.png' %}";
+          levelButton.textContent = "Level 3";
+        } else if (currentPoints >= 20) {
           fishImage.src = "{% static 'images/fish2.png' %}";
           levelButton.textContent = "Level 2";
-        } else {
+        }else{ 
           fishImage.src = "{% static 'images/fish.png' %}";
           levelButton.textContent = "Level 1";
         }
