@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Room, Topic, Message, User, Todo
 from .forms import RoomForm, UserForm, MyUserCreationForm
+from rest_framework.decorators import api_view
+
 
 
 
@@ -274,6 +276,7 @@ def toggle_todo(request, todo_id):
     # Modify or add a timer completion endpoint
 @login_required(login_url='login')
 def complete_timer(request):
+
     if request.method == 'POST':
         # Award points for completing the timer
         award_points(request.user, 10, "Completed study session")
@@ -288,3 +291,13 @@ def complete_timer(request):
             'level_up': level_up
         })
     return JsonResponse({'success': False}, status=400)
+
+
+
+@api_view(['POST'])
+def create_event(request):
+    serializer = EventSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

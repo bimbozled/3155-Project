@@ -29,4 +29,5 @@ urlpatterns = [
     path('studyTimer/', views.studyTimerPage, name="studyTimer"),
     path('add_points/', views.add_points, name='add_points'),
     path('complete-timer/', views.complete_timer, name='complete_timer'),
+    path('api/events/', views.create_event, name='create-event'),
 ]
